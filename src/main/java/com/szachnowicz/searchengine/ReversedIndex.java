@@ -1,26 +1,19 @@
 package com.szachnowicz.searchengine;
 
-import java.util.*;
+import com.sun.istack.internal.NotNull;
 
+import java.util.Collection;
+import java.util.List;
 
-class ReversedIndex implements InMemoryIndex {
+public interface ReversedIndex {
+    void putDocument(Document word);
 
-    Collection<Document> list = new HashSet<>();
-    Map<String, Set<Integer>> wordsIndexes = new HashMap<>();
+    Collection<Integer> getAllDocIdsOfKey(String word);
 
-    public void putKey(Document document) {
-        list.add(document);
-        document.getWords()
-                .forEach(s -> wordsIndexes
-                        .computeIfAbsent(s, k -> new HashSet<>()).add(document.getId()));
-    }
+    int getTotalKeyCount(String word);
 
-    public Collection<Integer> getAllDocIdsOfKey(String word) {
-        return wordsIndexes.getOrDefault(word, Collections.EMPTY_SET);
-    }
+    List<ThfdifIndex> getThfidForWordFormAllDocuments(String word);
 
+    List<ThfdifIndex> getThfidForWordFormAllDocumentsSorted(String word, boolean asc);
 
-    public int getTotalKeyCount(String word) {
-        return wordsIndexes.getOrDefault(word, new HashSet<>()).size();
-    }
 }

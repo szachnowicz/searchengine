@@ -5,11 +5,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
 @EqualsAndHashCode
 class Document {
-    final int id;
-    final List<String> words;
+    private final int id;
+    private final List<String> words;
+    private final Map<String, Double> termFrequencyIndex;
 }
